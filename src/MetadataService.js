@@ -53,7 +53,7 @@ export class MetadataService {
         return this._jsonService.getJson(this.metadataUrl)
             .then(metadata => {
                 Log.debug("MetadataService.getMetadata: json received");
-                this._settings.metadata = Object.assig(metadata, this._settings.metadata || {});
+                this._settings.metadata = Object.assign(metadata, this._settings.metadata || {});
                 return this._settings.metadata;
             });
     }
