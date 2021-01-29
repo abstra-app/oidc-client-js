@@ -43,11 +43,6 @@ export class MetadataService {
     }
 
     getMetadata() {
-        if (this._settings.metadata) {
-            Log.debug("MetadataService.getMetadata: Returning metadata from settings");
-            return Promise.resolve(this._settings.metadata);
-        }
-
         if (!this.metadataUrl) {
             Log.error("MetadataService.getMetadata: No authority or metadataUrl configured on settings");
             return Promise.reject(new Error("No authority or metadataUrl configured on settings"));
@@ -58,7 +53,10 @@ export class MetadataService {
         return this._jsonService.getJson(this.metadataUrl)
             .then(metadata => {
                 Log.debug("MetadataService.getMetadata: json received");
-                this._settings.metadata = metadata;
+                this._settings.metadata = {
+                    ...metadata,
+                    ...this._settings.metadata || {},
+                };
                 return metadata;
             });
     }
