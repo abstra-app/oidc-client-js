@@ -150,10 +150,10 @@ export class ResponseValidator {
                 return this._userInfoService.getClaims(response.access_token).then(claims => {
                     Log.debug("ResponseValidator._processClaims: user info claims received from user info endpoint");
 
-                    if (claims.sub !== response.profile.sub) {
-                        Log.error("ResponseValidator._processClaims: sub from user info endpoint does not match sub in access_token");
-                        return Promise.reject(new Error("sub from user info endpoint does not match sub in access_token"));
-                    }
+                    // if (claims.sub !== response.profile.sub) {
+                    //     Log.error("ResponseValidator._processClaims: sub from user info endpoint does not match sub in access_token");
+                    //     return Promise.reject(new Error("sub from user info endpoint does not match sub in access_token"));
+                    // }
 
                     response.profile = this._mergeClaims(response.profile, claims);
                     Log.debug("ResponseValidator._processClaims: user info claims received, updated profile:", response.profile);
