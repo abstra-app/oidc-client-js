@@ -21,6 +21,7 @@ export class UserManagerSettings extends OidcClientSettings {
         popupWindowTarget,
         silent_redirect_uri,
         silentRequestTimeout,
+        silentRenewCallback,
         automaticSilentRenew = false,
         validateSubOnSilentRenew = false,
         includeIdTokenInSilentRenew = true,
@@ -34,7 +35,7 @@ export class UserManagerSettings extends OidcClientSettings {
         redirectNavigator = new RedirectNavigator(),
         popupNavigator = new PopupNavigator(),
         iframeNavigator = new IFrameNavigator(),
-        userStore = new WebStorageStateStore({ store: Global.sessionStorage })
+        userStore = new WebStorageStateStore({ store: Global.sessionStorage }),
     } = {}) {
         super(arguments[0]);
 
@@ -45,6 +46,7 @@ export class UserManagerSettings extends OidcClientSettings {
 
         this._silent_redirect_uri = silent_redirect_uri;
         this._silentRequestTimeout = silentRequestTimeout;
+        this._silentRenewCallback = silentRenewCallback;
         this._automaticSilentRenew = automaticSilentRenew;
         this._validateSubOnSilentRenew = validateSubOnSilentRenew;
         this._includeIdTokenInSilentRenew = includeIdTokenInSilentRenew;
@@ -88,8 +90,11 @@ export class UserManagerSettings extends OidcClientSettings {
     get silent_redirect_uri() {
         return this._silent_redirect_uri;
     }
-     get silentRequestTimeout() {
+    get silentRequestTimeout() {
         return this._silentRequestTimeout;
+    }
+    get silentRenewCallback() {
+        return this._silentRenewCallback;
     }
     get automaticSilentRenew() {
         return this._automaticSilentRenew;

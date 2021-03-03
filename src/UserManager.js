@@ -164,7 +164,10 @@ export class UserManager extends OidcClient {
         return this._loadUser().then(user => {
             if (user && user.refresh_token) {
                 args.refresh_token = user.refresh_token;
-                return this._useRefreshToken(args);
+                return this._useRefreshToken(args).then(user => {
+                    this.settings.silentRenewCallback(user)
+                    return user;
+                });
             }
             else {
                 args.request_type = "si:s";
