@@ -2,8 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 import { Log } from './Log.js';
-import { decode } from 'jsonwebtoken';
-
 export class User {
     constructor({id_token, session_state, access_token, refresh_token, token_type, scope, profile, expires_at, state}) {
         this.id_token = id_token;
@@ -44,15 +42,6 @@ export class User {
         return (this.scope || "").split(" ");
     }
 
-    get extendedProfile() {
-        const idInfo = decode(this.id_token);
-
-        if (idInfo) {
-            return Object.assign({}, this.profile, idInfo);
-        }
-        return this.profile;
-    }
-
     toStorageString() {
         Log.debug("User.toStorageString");
         return JSON.stringify({
@@ -62,7 +51,7 @@ export class User {
             refresh_token: this.refresh_token,
             token_type: this.token_type,
             scope: this.scope,
-            profile: this.extendedProfile,
+            profile: this.profile,
             expires_at: this.expires_at
         });
     }
