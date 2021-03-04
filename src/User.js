@@ -47,7 +47,10 @@ export class User {
     get extendedProfile() {
         const idInfo = decode(this.id_token);
 
-        return Object.assign({}, this.profile, idInfo);
+        if (idInfo) {
+            return Object.assign({}, this.profile, idInfo);
+        }
+        return this.profile;
     }
 
     toStorageString() {
